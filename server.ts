@@ -2,6 +2,7 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import searchHandler from "./api/search";
+import musicHandler from "./api/music";
 
 async function startServer() {
   const app = express();
@@ -9,6 +10,11 @@ async function startServer() {
 
   // API routes FIRST
   app.get("/api/search", searchHandler);
+  app.get("/api/music", musicHandler);
+  
+  // Shorter paths for consistency with vercel.json
+  app.get("/search", searchHandler);
+  app.get("/music", musicHandler);
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
