@@ -1,10 +1,17 @@
 import YoutubeMusicApi from 'youtube-music-api';
 
 const api = new YoutubeMusicApi();
+let isInitialized = false;
+
+async function ensureInitialized() {
+  if (!isInitialized) {
+    await api.initalize();
+    isInitialized = true;
+  }
+}
 
 export default async function handler(req: any, res: any) {
   // Add CORS headers
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
@@ -24,8 +31,16 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    await api.initalize();
+    console.log(`Searching music for: ${q}`);
+    await ensureInitialized();
     const result = await api.search(q, "song");
+    
+    if (!result || !result.content) {
+      console.error("No content found in music result:", result);
+      return res.status(200).json([]);
+    }
+
+    console.log(`Found ${result.content.length} songs`);
     
     // Process results to be clean
     const songs = result.content.map((song: any) => ({

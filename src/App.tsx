@@ -210,22 +210,27 @@ export default function App() {
         <div className="mt-12 bg-gray-900 rounded-xl p-6 text-gray-300 shadow-lg">
           <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-400"></span>
-            API Usage Instructions
+            API Usage Instructions (CORS Enabled)
           </h3>
           <p className="text-sm mb-4">
-            You now have two clean Vercel endpoints:
+            You can call these endpoints from <strong>any website</strong> (including <code>yt-watchparty-beta.vercel.app</code>).
+            CORS is fully enabled for public access.
           </p>
           <div className="space-y-4">
             <div>
               <p className="text-xs font-medium text-gray-500 mb-2 uppercase">YouTube Video Search</p>
               <div className="bg-black rounded-lg p-4 font-mono text-sm overflow-x-auto border border-gray-800">
-                <span className="text-blue-400">const</span> response = <span className="text-blue-400">await</span> fetch(<span className="text-green-400">'https://yt-search-nine.vercel.app/search?q=your+query'</span>);
+                <span className="text-gray-500">// Call from your main site</span><br/>
+                <span className="text-blue-400">const</span> response = <span className="text-blue-400">await</span> fetch(<span className="text-green-400">'https://yt-search-nine.vercel.app/search?q=your+query'</span>);<br/>
+                <span className="text-blue-400">const</span> videos = <span className="text-blue-400">await</span> response.json();
               </div>
             </div>
             <div>
               <p className="text-xs font-medium text-gray-500 mb-2 uppercase">YouTube Music Search</p>
               <div className="bg-black rounded-lg p-4 font-mono text-sm overflow-x-auto border border-gray-800">
-                <span className="text-blue-400">const</span> response = <span className="text-blue-400">await</span> fetch(<span className="text-green-400">'https://yt-search-nine.vercel.app/music?q=your+query'</span>);
+                <span className="text-gray-500">// Call from your main site</span><br/>
+                <span className="text-blue-400">const</span> response = <span className="text-blue-400">await</span> fetch(<span className="text-green-400">'https://yt-search-nine.vercel.app/music?q=your+query'</span>);<br/>
+                <span className="text-blue-400">const</span> songs = <span className="text-blue-400">await</span> response.json();
               </div>
             </div>
           </div>

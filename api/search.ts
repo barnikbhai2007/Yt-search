@@ -2,7 +2,6 @@ import ytSearch from 'yt-search';
 
 export default async function handler(req: any, res: any) {
   // Add CORS headers so the user can call this API from their main website
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
@@ -22,7 +21,15 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
+    console.log(`Searching for: ${q}`);
     const result = await ytSearch(q);
+    
+    if (!result || !result.videos) {
+      console.error("No videos found in result:", result);
+      return res.status(200).json([]);
+    }
+
+    console.log(`Found ${result.videos.length} videos`);
     
     // Get the top 10 video results
     const videos = result.videos.slice(0, 10).map((vid: any) => ({
